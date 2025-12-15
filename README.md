@@ -517,6 +517,14 @@ We evaluate video generation on **a single RTX 5090 GPU**. The E2E Time refers t
 </table>
 
 
+## Roadmap
+
+We’re actively working on the following features and improvements:
+
+- [ ] vLLM-Omni integration
+- [ ] Support for more video generation models
+- [ ] Support for autoregressive video generation models
+
 
 ## Citation
 **If you use this code or find our work valuable, please cite:**
