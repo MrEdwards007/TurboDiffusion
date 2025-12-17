@@ -553,7 +553,7 @@ Please refer to `turbodiffusion/rcm/configs/experiments/sla/wan2pt1_t2v.py` for 
 
 #### Model Merging
 
-The parameter updates from SLA training can be merged into rCM checkpoints using `turbodiffusion/scripts/merge_models.py`, enabling rCM to perform sparse attention inference.
+The parameter updates from SLA training can be merged into rCM checkpoints using `turbodiffusion/scripts/merge_models.py`, enabling rCM to perform sparse attention inference. Specify `--base` as the rCM model, `--diff_base` as the pretrained model, and `--diff_target` as the SLA-tuned model.
 
 ## Roadmap
 
