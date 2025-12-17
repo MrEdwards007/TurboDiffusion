@@ -74,9 +74,9 @@ pip install git+https://github.com/thu-ml/SpargeAttn.git --no-build-isolation
 ```
 
 ## Inference
+For GPUs with more than 40GB of GPU memory, **e.g., H100, we recommend using the unquantized checkpoint (without `-quant`) and removing `--quant_linear` from the command.**
 
-
-1.  Download the Wan2.1 VAE and umT5 text encoder checkpoints from the official [Wan2.1](https://huggingface.co/Wan-AI/Wan2.1-T2V-1.3B) repository on Huggingface:
+1.  Download the Wan VAE and umT5 text encoder checkpoints from the official [Wan](https://huggingface.co/Wan-AI/Wan2.1-T2V-1.3B) repository on Huggingface:
 
     ```bash
     mkdir checkpoints
@@ -96,15 +96,14 @@ pip install git+https://github.com/thu-ml/SpargeAttn.git --no-build-isolation
     wget https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P/resolve/main/TurboWan2.1-T2V-1.3B-480P-quant.pth
     ```
     
-    For GPUs with more than 40GB of GPU memory, **e.g., H100, we recommend using the unquantized checkpoint (without `-quant`) and removing `--quant_linear` from the command.**
 
-    For the I2V model, download both the high-noise and low-noise checkpoints:
+    For the Wan2.2-I2V model, download both the high-noise and low-noise checkpoints:
     ```bash
     wget https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P/resolve/main/TurboWan2.2-I2V-A14B-high-720P.pth
     wget https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P/resolve/main/TurboWan2.2-I2V-A14B-low-720P.pth
     ```
 
-3.  Use the inference script for the T2V model:
+3.  Use the inference script for the **T2V** model:
     ```bash
     export PYTHONPATH=turbodiffusion
     
@@ -139,7 +138,7 @@ pip install git+https://github.com/thu-ml/SpargeAttn.git --no-build-isolation
         --sla_topk 0.1
     ```
 
-    Or the script for the I2V model:
+    Or the script for the **I2V** model:
     ```bash
     export PYTHONPATH=turbodiffusion
 
