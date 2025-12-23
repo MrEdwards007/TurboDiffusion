@@ -59,7 +59,7 @@ def print_header(args: argparse.Namespace):
     header.append(str(args.num_steps), style="yellow")
 
     console.print(Panel(header, border_style="blue"))
-    console.print("[dim]Type [bold]/help[/bold] for commands. Use [bold]\\\\[/bold] for newline in prompts.[/dim]\n")
+    console.print("Start typing prompts for generation. [dim]Type [bold]/help[/bold] for commands. Use [bold]\\\\[/bold] for newline in prompts.[/dim]\n")
 
 
 def print_help():
@@ -88,19 +88,31 @@ def print_config(args: argparse.Namespace, defaults: dict):
 
 
 def get_prompt_input(history: InMemoryHistory) -> str:
-    """Get prompt from user with slash command completion."""
+    """Get prompt from user with slash command completion and line continuation."""
     completer = WordCompleter(list(COMMANDS.keys()), ignore_case=True)
 
     try:
-        text = prompt(
-            [("class:prompt", "prompt> ")],
-            style=PROMPT_STYLE,
-            completer=completer,
-            history=history,
-            multiline=False,
-        )
-        # Handle backslash for multiline: replace \\ with actual newline
-        text = text.replace("\\\\", "\n")
+        lines = []
+        is_continuation = False
+
+        while True:
+            prompt_str = "... " if is_continuation else "> "
+            line = prompt(
+                [("class:prompt", prompt_str)],
+                style=PROMPT_STYLE,
+                completer=completer if not is_continuation else None,
+                history=history if not is_continuation else None,
+            )
+
+            if line.endswith("\\"):
+                # Line continuation: remove trailing backslash and continue
+                lines.append(line[:-1])
+                is_continuation = True
+            else:
+                lines.append(line)
+                break
+
+        text = "\n".join(lines)
         return text.strip()
     except (EOFError, KeyboardInterrupt):
         return None
